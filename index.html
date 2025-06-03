@@ -339,27 +339,29 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
         import { getFirestore, collection, addDoc, getDocs, doc, onSnapshot, updateDoc, deleteDoc, query, where, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js"; // Import getAnalytics
 
         // --- Firebase Configuration (REQUIRED: Replace with your actual Firebase project config) ---
         // You can find this in your Firebase Console -> Project settings -> Your apps -> Web app
         const firebaseConfig = {
-            apiKey: "YOUR_FIREBASE_API_KEY",
-            authDomain: "YOUR_FIREBASE_AUTH_DOMAIN",
-            projectId: "YOUR_FIREBASE_PROJECT_ID",
-            storageBucket: "YOUR_FIREBASE_STORAGE_BUCKET",
-            messagingSenderId: "YOUR_FIREBASE_MESSAGING_SENDER_ID",
-            appId: "YOUR_FIREBASE_APP_ID", // This is the web app ID
-            measurementId: "YOUR_FIREBASE_MEASUREMENT_ID"
+            apiKey: "AIzaSyAxPGqRvv_hvofcu50rwQLs4ZiOxNTTU7U",
+            authDomain: "icarstork7.firebaseapp.com",
+            projectId: "icarstork7",
+            storageBucket: "icarstork7.firebasestorage.app",
+            messagingSenderId: "727656710459",
+            appId: "1:727656710459:web:7d1683ec36e60abb53b71e",
+            measurementId: "G-5LMRSECJ7B"
         };
 
         // --- Gemini API Key (REQUIRED: Replace with your actual Gemini API Key) ---
         // IMPORTANT: For production, consider using a secure proxy to avoid exposing this key directly in frontend.
-        const geminiApiKey = "YOUR_GEMINI_API_KEY";
+        const geminiApiKey = "AIzaSyDHWTigzk3LQjY9zIXM3iPF0VT-a8g3w8E"; // Chave da API do Gemini adicionada aqui
 
         // Initialize Firebase
         let app;
         let db;
         let auth;
+        let analytics; // Declare analytics variable
         let currentUserId = null;
         let currentAppIdForFirestorePath = null; // Will store the actual Firebase App ID for Firestore paths
 
@@ -823,7 +825,7 @@
                         document.getElementById('supplier-payment-terms').value = supplierToEdit.paymentTerms;
 
                         document.getElementById('supplier-submit-btn').textContent = 'Atualizar Fornecedor';
-                        document.getElementById('supplier-form-title').textContent = 'Editar Fornecedor';
+                        document.getElementById('supplier-form-title').textContent = 'Adicionar Novo Fornecedor';
                         document.getElementById('supplier-cancel-edit-btn').classList.remove('hidden');
                     }
                 });
@@ -1116,6 +1118,7 @@
                 app = initializeApp(firebaseConfig);
                 db = getFirestore(app);
                 auth = getAuth(app);
+                analytics = getAnalytics(app); // Initialize Analytics
                 currentAppIdForFirestorePath = firebaseConfig.appId; // Store for Firestore paths
 
                 // Set up Auth State Listener
